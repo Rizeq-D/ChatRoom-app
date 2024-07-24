@@ -23,9 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SignUpScreen(
-
-){
+fun SignUpScreen(){
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -74,7 +72,7 @@ fun SignUpScreen(
         )
         Button(
             onClick = {
-//add the signup function
+
                 email = ""
                 password = ""
                 firstName = ""

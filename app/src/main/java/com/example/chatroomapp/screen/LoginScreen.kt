@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(onNavigateToSignUp : () -> Unit) {
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -64,12 +64,14 @@ fun LoginScreen() {
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text("Don't have an account? Sign up.",
-            modifier = Modifier.clickable {  }
+            modifier = Modifier.clickable {
+                onNavigateToSignUp()
+            }
         )
     }
 }
 @Preview
 @Composable
 fun LoginPreview() {
-    LoginScreen()
+    LoginScreen({})
 }

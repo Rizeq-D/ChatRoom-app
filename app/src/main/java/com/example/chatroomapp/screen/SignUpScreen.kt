@@ -21,9 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.chatroomapp.viewmodel.AuthViewModel
 
 @Composable
-fun SignUpScreen(onNavigateToLogin : () -> Unit ){
+fun SignUpScreen(authViewModel: AuthViewModel, onNavigateToLogin : () -> Unit ){
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -72,7 +74,7 @@ fun SignUpScreen(onNavigateToLogin : () -> Unit ){
         )
         Button(
             onClick = {
-
+                authViewModel.signUp(email, password, firstName, lastName)
                 email = ""
                 password = ""
                 firstName = ""
@@ -94,5 +96,5 @@ fun SignUpScreen(onNavigateToLogin : () -> Unit ){
 @Preview
 @Composable
 fun SignupPreview() {
-    SignUpScreen({})
+    SignUpScreen(authViewModel = viewModel(), {})
 }

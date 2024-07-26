@@ -7,10 +7,12 @@ import androidx.navigation.compose.composable
 import com.example.chatroomapp.screen.LoginScreen
 import com.example.chatroomapp.screen.Screen
 import com.example.chatroomapp.screen.SignUpScreen
+import com.example.chatroomapp.viewmodel.AuthViewModel
 
 @Composable
 fun NavigationGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    authViewModel: AuthViewModel
 ) {
     NavHost(
         navController = navController,
@@ -18,6 +20,7 @@ fun NavigationGraph(
     ) {
         composable(Screen.SignupScreen.route) {
             SignUpScreen(
+                authViewModel = authViewModel,
                 onNavigateToLogin = { navController.navigate(Screen.LoginScreen.route) }
             )
         }

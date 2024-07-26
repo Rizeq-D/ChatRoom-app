@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.chatroomapp.data.NavigationGraph
 import com.example.chatroomapp.ui.theme.ChatRoomAPPTheme
+import com.example.chatroomapp.viewmodel.AuthViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavigationGraph(navController = navController)
+                    NavigationGraph(navController = navController, authViewModel = AuthViewModel())
                 }
             }
         }

@@ -7,26 +7,35 @@ import kotlinx.coroutines.tasks.await
 class UserRepository(private val auth: FirebaseAuth,
                      private val firestore: FirebaseFirestore) {
 
-    suspend fun singUp(email: String, password: String, firstName: String, lastName: String): Result<Boolean> =
+    suspend fun signUp(
+        email: String,
+        password: String,
+        firstName: String,
+        lastName: String
+    ): Result<Boolean> =
 
         try {
             auth.createUserWithEmailAndPassword(email, password).await()
             val user = User(firstName, lastName, email)
+            saveUserToFireStore(user)
             Result.Success(true)
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             Result.Error(e)
         }
-    private suspend fun saveUserToFireStore(user: User) {
 
-        firestore.collection("user").document(user.email).set(user).await()
-    }
-    object Injection {
-        private val instance: FirebaseFirestore by lazy {
-            FirebaseFirestore.getInstance()
+        private suspend fun saveUserToFireStore(user: User) {
+
+            firestore.collection("user").document(user.email).set(user).await()
         }
 
-        fun instance(): FirebaseFirestore {
-            return instance
+        object Injection {
+            private val instance: FirebaseFirestore by lazy {
+                FirebaseFirestore.getInstance()
+            }
+
+            fun instance(): FirebaseFirestore {
+                return instance
+            }
         }
     }
-}
+

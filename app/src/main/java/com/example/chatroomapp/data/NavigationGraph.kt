@@ -1,5 +1,6 @@
 package com.example.chatroomapp.data
 
+import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -8,11 +9,15 @@ import com.example.chatroomapp.screen.LoginScreen
 import com.example.chatroomapp.screen.Screen
 import com.example.chatroomapp.screen.SignUpScreen
 import com.example.chatroomapp.viewmodel.AuthViewModel
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import androidx.activity.result.ActivityResultLauncher
 
 @Composable
 fun NavigationGraph(
     navController: NavHostController,
-    authViewModel: AuthViewModel
+    authViewModel: AuthViewModel,
+    googleSignInClient: GoogleSignInClient,
+    signInLauncher: ActivityResultLauncher<Intent>
 ) {
     NavHost(
         navController = navController,
@@ -26,7 +31,13 @@ fun NavigationGraph(
         }
         composable(Screen.LoginScreen.route) {
             LoginScreen(
-                onNavigateToSignUp = { navController.navigate(Screen.SignupScreen.route) }
+                authViewModel = authViewModel,
+                onNavigateToSignUp = { navController.navigate(Screen.SignupScreen.route) },
+                onSignInSuccess = {
+                    navController.navigate(Screen.ChatRoomsScreen.route)
+                },
+                googleSignInClient = googleSignInClient,
+                signInLauncher = signInLauncher
             )
         }
     }

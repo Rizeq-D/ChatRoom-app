@@ -12,15 +12,33 @@
           "package_name": "com.example.chatroomapp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "182981404868-o0fgb8mvm5q7ol69tsbcjkuq0lp2ic9t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chatroomapp",
+            "certificate_hash": "074e23dcf98281a44583818e2b11702775439130"
+          }
+        },
+        {
+          "client_id": "182981404868-v6g543j8jd55ess1uv4prsi78g4utbu1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyAkfOOKGlW_rfIOElf7wz80Q6HP86RMreM"
+          "current_key": "AIzaSyDum594X8ODOlfn9GJiZU1b0aDnKIGAsm4"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "182981404868-v6g543j8jd55ess1uv4prsi78g4utbu1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -23,7 +23,14 @@ class AuthViewModel : ViewModel(){
 
     fun signUp(email: String, password: String, firstName: String, lastName: String) {
         viewModelScope.launch {
-            _authResult.value = userRepository.signUp(email, password, firstName, lastName)
+            val result = userRepository.signUp(email, password, firstName, lastName)
+            _authResult.postValue(result)
+        }
+    }
+    fun login(email: String, password: String) {
+        viewModelScope.launch {
+            val result = userRepository.login(email, password)
+            _authResult.postValue(result)
         }
     }
 }

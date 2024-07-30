@@ -21,16 +21,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chatroomapp.viewmodel.AuthViewModel
+import com.example.chatroomapp.data.Result
+import androidx.compose.runtime.livedata.observeAsState
+
 
 @Composable
-fun SignUpScreen(authViewModel: AuthViewModel, onNavigateToLogin : () -> Unit ){
-
+fun SignUpScreen(
+    authViewModel: AuthViewModel,
+    onNavigateToLogin: () -> Unit
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
+    var isLoading by remember { mutableStateOf(false) }
+    val result by authViewModel.authResult.observeAsState()
 
     Column(
         modifier = Modifier
@@ -38,7 +44,7 @@ fun SignUpScreen(authViewModel: AuthViewModel, onNavigateToLogin : () -> Unit ){
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
@@ -74,27 +80,57 @@ fun SignUpScreen(authViewModel: AuthViewModel, onNavigateToLogin : () -> Unit ){
         )
         Button(
             onClick = {
+                isLoading = true
                 authViewModel.signUp(email, password, firstName, lastName)
-                email = ""
-                password = ""
-                firstName = ""
-                lastName = ""
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(8.dp),
+            enabled = !isLoading // Disable button while loading
         ) {
             Text("Sign Up")
         }
+
+        // Display result or error message
+        when (val authResult = result) {
+            is Result.Success -> {
+                if (isLoading) {
+                    // Clear the form fields after successful sign-up
+                    email = ""
+                    password = ""
+                    firstName = ""
+                    lastName = ""
+                    isLoading = false
+                    onNavigateToLogin()
+                }
+            }
+            is Result.Error -> {
+                if (isLoading) {
+                    isLoading = false
+                }
+                Text("Error: ${authResult.exception.message}", color = androidx.compose.ui.graphics.Color.Red)
+            }
+            else -> {
+                // No result yet or in progress
+            }
+        }
+
         Spacer(modifier = Modifier.height(16.dp))
         Text("Already have an account? Sign in.",
             modifier = Modifier.clickable {
                 onNavigateToLogin()
-            })
+            }
+        )
     }
 }
+
 @Preview
 @Composable
 fun SignupPreview() {
-    SignUpScreen(authViewModel = viewModel(), {})
+    // Preview code should not include actual ViewModel or navigation parameters
+    SignUpScreen(
+        authViewModel = AuthViewModel(),
+        onNavigateToLogin = {}
+    )
 }
+

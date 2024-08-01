@@ -1,5 +1,7 @@
 package com.example.chatroomapp.screen
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +22,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun ChatScreen(roomId : String) {
@@ -60,6 +66,39 @@ fun ChatScreen(roomId : String) {
         }
     }
 }
+@RequiresApi(Build.VERSION_CODES.O)
+private fun formatTimestamp(timestamp: Long) : String {
+
+    val messageDateTime = LocalDateTime.ofInstant(
+        Instant.ofEpochMilli(timestamp),
+        ZoneId.systemDefault()
+    )
+    val now = LocalDateTime.now()
+
+    return when {
+        isSameDay(messageDateTime, now)
+        -> "today ${formatTime(messageDateTime)}"
+        isSameDay(messageDateTime.minusDays(1), now)
+        -> "yesterday ${formatTime(messageDateTime)}"
+        else -> formatTime(messageDateTime)
+
+    }
+}
+@RequiresApi(Build.VERSION_CODES.O)
+private fun isSameDay(dateTime1 : LocalDateTime, dateTime2 : LocalDateTime) : Boolean {
+
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    return dateTime1.format(formatter) == dateTime2.format(formatter)
+}
+@RequiresApi(Build.VERSION_CODES.O)
+private fun formatTime(dateTime : LocalDateTime) : String {
+
+    val formatter = DateTimeFormatter.ofPattern("HH:mm")
+    return formatter.format(dateTime)
+}
+
+
+
 @Preview
 @Composable
 fun ChatScreenPreview(){

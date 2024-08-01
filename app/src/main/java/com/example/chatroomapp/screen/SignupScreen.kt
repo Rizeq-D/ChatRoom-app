@@ -27,7 +27,7 @@ import androidx.compose.runtime.livedata.observeAsState
 
 
 @Composable
-fun SignUpScreen(
+fun SignupScreen(
     authViewModel: AuthViewModel,
     onNavigateToLogin: () -> Unit
 ) {
@@ -111,7 +111,7 @@ fun SignUpScreen(
                 Text("Error: ${authResult.exception.message}", color = androidx.compose.ui.graphics.Color.Red)
             }
             else -> {
-                // No result yet or in progress
+                // in progress
             }
         }
 
@@ -128,7 +128,7 @@ fun SignUpScreen(
 @Composable
 fun SignupPreview() {
     // Preview code should not include actual ViewModel or navigation parameters
-    SignUpScreen(
+    SignupScreen(
         authViewModel = AuthViewModel(),
         onNavigateToLogin = {}
     )

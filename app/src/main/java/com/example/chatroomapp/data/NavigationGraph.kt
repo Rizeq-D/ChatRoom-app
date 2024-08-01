@@ -7,10 +7,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.chatroomapp.screen.LoginScreen
 import com.example.chatroomapp.screen.Screen
-import com.example.chatroomapp.screen.SignUpScreen
 import com.example.chatroomapp.viewmodel.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import androidx.activity.result.ActivityResultLauncher
+import com.example.chatroomapp.screen.ChatRoomListScreen
+import com.example.chatroomapp.screen.SignupScreen
 
 @Composable
 fun NavigationGraph(
@@ -24,7 +25,7 @@ fun NavigationGraph(
         startDestination = Screen.SignupScreen.route
     ) {
         composable(Screen.SignupScreen.route) {
-            SignUpScreen(
+            SignupScreen(
                 authViewModel = authViewModel,
                 onNavigateToLogin = { navController.navigate(Screen.LoginScreen.route) }
             )
@@ -34,11 +35,29 @@ fun NavigationGraph(
                 authViewModel = authViewModel,
                 onNavigateToSignUp = { navController.navigate(Screen.SignupScreen.route) },
                 onSignInSuccess = {
-                    navController.navigate(Screen.ChatRoomsScreen.route)
+                    navController.navigate(Screen.ChatRoomListScreen.route)
                 },
                 googleSignInClient = googleSignInClient,
                 signInLauncher = signInLauncher
             )
         }
+        composable(Screen.ChatRoomListScreen.route) {
+            ChatRoomListScreen()
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

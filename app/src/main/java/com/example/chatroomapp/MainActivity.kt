@@ -65,7 +65,7 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         authViewModel = authViewModel,
                         googleSignInClient = googleSignInClient,
-                        signInLauncher = signInLauncher
+                        signInLauncher = signInLauncher,
                     )
                 }
             }

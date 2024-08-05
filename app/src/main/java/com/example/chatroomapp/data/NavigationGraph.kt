@@ -11,6 +11,7 @@ import com.example.chatroomapp.viewmodel.AuthViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import androidx.activity.result.ActivityResultLauncher
 import com.example.chatroomapp.screen.ChatRoomListScreen
+import com.example.chatroomapp.screen.ChatScreen
 import com.example.chatroomapp.screen.SignupScreen
 
 @Composable
@@ -42,7 +43,13 @@ fun NavigationGraph(
             )
         }
         composable(Screen.ChatRoomListScreen.route) {
-            ChatRoomListScreen()
+            ChatRoomListScreen{
+                navController.navigate("${Screen.ChatScreen.route}/${it.id}")
+            }
+        }
+        composable("${Screen.ChatScreen.route}/{roomId}") {
+            val roomId : String = it.arguments?.getString("roomId") ?:""
+            ChatScreen(roomId = roomId)
         }
     }
 }

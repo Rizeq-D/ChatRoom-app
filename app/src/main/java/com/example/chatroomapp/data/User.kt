@@ -1,7 +1,7 @@
 package com.example.chatroomapp.data
 
 data class User(
-    val firsName : String = "",
+    val firstName : String = "",
     val lastName : String = "",
     val email : String = "",
     )
